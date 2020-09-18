@@ -1,0 +1,29 @@
+function EnergyR = test(Vparameters)
+%
+alpha=Vparameters(1);  %扰动F并矢之一
+beta=Vparameters(2);   %扰动F并矢之二
+F=[cos(alpha)*cos(beta),cos(alpha)*sin(beta);sin(alpha)*cos(beta),sin(alpha)*sin(beta)];  %扰动的矩阵形式
+F1_11=F(1,1);  %扰动的11分量
+F1_12=F(1,2);  %扰动的12分量
+F1_21=F(2,1);  %扰动的21分量
+F1_22=F(2,2);  %扰动的22分量
+D=zeros(4,4);  %初始化偏P/偏F矩阵
+D(1,1)=Vparameters(3);  %以下为偏P/偏F的分量
+D(1,2)=Vparameters(4);
+D(1,3)=Vparameters(5);
+D(1,4)=Vparameters(6);
+D(2,2)=Vparameters(7);
+D(2,3)=Vparameters(8);
+D(2,4)=Vparameters(9);
+D(3,3)=Vparameters(10);
+D(3,4)=Vparameters(11);
+D(4,4)=Vparameters(12);
+D(2,1)=D(1,2);
+D(3,1)=D(1,3);
+D(3,2)=D(2,3);
+D(4,1)=D(1,4);
+D(4,2)=D(2,4);
+D(4,3)=D(3,4);
+U1=0.5*(D(1,1)*F1_11^2+D(2,2)*F1_22^2+D(3,3)*F1_12^2+D(4,4)*F1_21^2+2*D(1,2)*F1_11*F1_22+2*D(1,3)*F1_11*F1_21+2*D(1,4)*F1_11*F1_12+2*D(2,3)*F1_22*F1_21+2*D(2,4)*F1_22*F1_12+2*D(3,4)*F1_12*F1_21);  %扰动能量计算
+EnergyR=U1; %扰动能量值
+
