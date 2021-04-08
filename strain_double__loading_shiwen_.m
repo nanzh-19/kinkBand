@@ -17,7 +17,7 @@ s(1,2)=(wf*vf+wm*vm-vf*vm)/(wf*vm*ef+wm*vf*em-wf*ef-wm*em);  %柔度矩阵分量S12
 s(2,1)=s(1,2);     %柔度矩阵分量S21
 c=s^-1;            %求解刚度矩阵
 n=45;    %特定加载角度下应变加载旋转角cita切分次数
-step=30; %特定加载角度下应变加载幅值A步长数
+step=60; %特定加载角度下应变加载幅值A步长数
 times=46;%加载角度切分次数
 total=n*times;     %存储数据所需的空间大小
 e1=zeros(total,1); %材料失稳时1方向的应变加载
@@ -87,7 +87,7 @@ for i=1:n     %应变加载旋转角alpha循环，总共循环n次
         Cri44=duf(4,4);
         Lb1=[0;0;Cri11;Cri12;Cri13;Cri14;Cri22;Cri23;Cri24;Cri33;Cri34;Cri44]; %遗传算法变量的下界  
         Ub1=[2*pi;2*pi;Cri11;Cri12;Cri13;Cri14;Cri22;Cri23;Cri24;Cri33;Cri34;Cri44]; %遗传算法变量的上界
-        options=gaoptimset('Generations',1500,'PopulationSize',50,'TolFun',1e-6);  %遗传算法的参数设置
+        options=gaoptimset('Generations',1500,'PopulationSize',100,'TolFun',1e-6);  %遗传算法的参数设置
         [xx,AE] = ga(@test,12,[],[],[],[],Lb1,Ub1,[],options);  %调用遗传算法工具箱，得到优化解，其中xx是优化后的和变量值，AE为扰动能量    
         if AE<0  %如果扰动能量首次出现负数，则材料恰好失稳，记录以下数据来画失稳相图
            position=(k-1)*n+i;  %计算以下数据存储的位置
